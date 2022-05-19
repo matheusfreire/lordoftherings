@@ -6,6 +6,10 @@ plugins {
 apply from: 'dependencies.gradle'
 apply from: 'lordLibraries.gradle'
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     compileSdk Versions.target_sdk_version
 
@@ -17,6 +21,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "API_KEY", apikeyProperties['LOR_KEY'])
+        buildConfigField("String", "BASE_URL",'"https://the-one-api.dev/v2/"')
     }
 
     buildTypes {
